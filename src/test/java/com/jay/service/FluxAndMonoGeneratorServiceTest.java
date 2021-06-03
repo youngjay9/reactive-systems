@@ -17,8 +17,25 @@ public class FluxAndMonoGeneratorServiceTest {
   }
 
   @Test
-  void nameMono() {
-    var monoName = fluxAndMonoGeneratorService.nameMono();
+  void namesFluxMap() {
 
+    // when
+    var namesFlux = fluxAndMonoGeneratorService.namesFluxMap();
+
+    // then
+    StepVerifier.create(namesFlux)
+        .expectNext("JAY", "THUY", "PING", "ANG")
+        .verifyComplete();
   }
+
+  @Test
+  void nameFluxImmutability() {
+
+    var namesFlux = fluxAndMonoGeneratorService.namesFluxImmutability();
+
+    StepVerifier.create(namesFlux)
+        .expectNext("JAY", "THUY", "PING", "ANG")
+        .verifyComplete();
+  }
+
 }
