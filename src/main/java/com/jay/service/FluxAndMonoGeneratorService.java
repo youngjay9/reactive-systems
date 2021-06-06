@@ -18,12 +18,13 @@ public class FluxAndMonoGeneratorService {
 
   /**
    * 將每一個 element 直接 transform(map) 成另一個 element
+   *
    * @return
    */
   public Flux<String> namesFluxMap() {
     return Flux
         .fromIterable(List.of("Jay", "Thuy", "Ping", "Ang"))
-        .map(String::toUpperCase)
+        .map(String::toUpperCase) // Flux<String>
         .log();
   }
 
@@ -49,17 +50,9 @@ public class FluxAndMonoGeneratorService {
   }
 
 
-  /**
-   * 將每一個 element flatten(攤平)，Ex: List、Array、String
-   * transform(map) 變成多個 element，Ex: List or Array
-   * or Flux<String> 這種情境使用：flatMap， 有 one to many 的概念
-   *
-   * @return
-   */
   public Flux<String> namesFluxFlatMap() {
-    return Flux.fromIterable(List.of("jay", "thuy", "ping", "ang"))
-        // 將每一個 String transform(map) 成 Flux<String>
-        .flatMap(n -> splitString(n))
+    return Flux.fromIterable(List.of("jay", "thuy", "ping", "ang")) // Flux<String>
+        .flatMap(n -> splitString(n)) // 將每一個
         .log();
   }
 
@@ -98,19 +91,8 @@ public class FluxAndMonoGeneratorService {
 //          System.out.println("FlatMap:" + n);
 //        });
 
-//    String word = "Hello";
-//    String[] array = word.split("");
-//    Stream<String> stream = Arrays.stream(array);
-//    stream.forEach(s->{
-//      System.out.println(s);
-//    });
-
-    List<String> list = List.of("Hello", "World");
-
-    list.stream()
-        .map(s -> s.split(""))
-        .flatMap(Arrays::stream);
-
-
+     service.namesFluxFlatMap().subscribe(f->{
+       System.out.println("FlatMap:"+f);
+     });
   }
 }
